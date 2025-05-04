@@ -1,25 +1,25 @@
-import React from 'react';
-import Navbar from './components/Navbar'; // Adjust the path based on your project structure
+// In your app.tsx file
+import React, { useEffect } from 'react';
+import TerminalComponent from './components/Terminal';
 
 function App() {
-  // Example navigation items
-  const menuItems = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Services', href: '/services' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Contact', href: '/contact' },
-  ];
+  // Add effect to disable scrolling on the entire document
+  useEffect(() => {
+    // Save the original overflow setting
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    
+    // Disable scrolling
+    document.body.style.overflow = 'hidden';
+    
+    // Re-enable scrolling on component unmount
+    return () => {
+      document.body.style.overflow = originalStyle;
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar menuItems={menuItems} logo="YourBrand" />
-      
-      {/* Main content of your application */}
-      <main className="max-w-6xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-gray-800">Welcome to YourBrand</h1>
-        <p className="mt-4 text-gray-600">This is your application content.</p>
-      </main>
+    <div className="h-screen w-screen overflow-hidden bg-black">
+      <TerminalComponent />
     </div>
   );
 }
